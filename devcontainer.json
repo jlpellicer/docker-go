@@ -1,0 +1,43 @@
+{
+    "name": "Go & PostgreSQL",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "docker-go",
+    "workspaceFolder": "/go",
+    // Set *default* container specific settings.json values on container create.
+    "settings": {
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"go.useGoProxyToCheckForToolUpdates": false,
+		"go.gopath": "/go",
+		"go.useLanguageServer": true,
+		"sqltools.connections": [{
+			"name": "Container database",
+			"driver": "PostgreSQL",
+			"previewLimit": 50,
+			"server": "localhost",
+			"port": 5432,
+			"database": "postgres",
+			"username": "postgres",
+			"password": "postgres"
+		}],
+	},
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"golang.Go",
+		"ruiquelhas.vscode-uppercase",
+		"ms-azuretools.vscode-docker",
+		"ckolkman.vscode-postgres",
+		"andyyaldoo.vscode-json",
+		"searking.preview-vscode",
+		"mikestead.dotenv",
+		"humao.rest-client"
+	],
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [3000, 5432],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "go get -x golang.org/x/tools/gopls && go get -v github.com/rubenv/sql-migrate/...",
+	"postStartCommand": "go version",
+
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode"
+}
